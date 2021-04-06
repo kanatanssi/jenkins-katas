@@ -54,8 +54,9 @@ pipeline {
 
     stage('component tests') {
       when {
-        not {
-          branch "dev/*"
+        anyOf {
+          branch "master"
+          changeRequest()
         }
       }
       steps {
