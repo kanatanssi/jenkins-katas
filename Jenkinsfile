@@ -12,9 +12,10 @@ pipeline {
 
     stage('Parallel execution') {
       parallel {
-        stage('Say Hello') {
+        stage('Say Hello if master') {
+          when {branch "master"}
           steps {
-            sh 'echo "hello world"'
+            sh 'echo "On master branch"'
           }
         }
 
@@ -48,6 +49,17 @@ pipeline {
         sh 'ci/build-docker.sh'
         sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin'
         sh 'ci/push-docker.sh'
+      }
+    }
+
+    stage('component tests') {
+      when {
+        not {
+          branch "dev/*"
+        }
+      }
+      steps {
+        sh 'ci/component-test.sh'
       }
     }
 
