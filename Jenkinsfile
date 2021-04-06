@@ -1,5 +1,8 @@
 pipeline {
   agent any
+    environment {
+      docker_username="uilleficode"
+    }
   stages {
     stage('Clone down') {
       steps {
