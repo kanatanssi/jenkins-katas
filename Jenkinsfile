@@ -59,7 +59,7 @@ pipeline {
         }
       }
       steps {
-        sh echo "This is where the component test would be"
+        sh "'echo This is where the component test would be'"
       }
     }
 
